@@ -1,0 +1,72 @@
+conky.config = {
+    background = true,
+    double_buffer = true,
+    alignment = 'bottom_right',
+    border_width = 1,
+    cpu_avg_samples = 2,
+    default_color = 'white',
+    draw_borders = false,
+    draw_graph_borders = true,
+    draw_outline = false,
+    draw_shades = false,
+    gap_x = 0,
+    gap_y = 600,
+    net_avg_samples = 2,
+    no_buffers = true,
+    own_window = true,
+    own_window_type = 'normal',
+    own_window_transparent = true,
+    own_window_colour = '000000',
+    own_window_argb_visual = true,
+    own_window_argb_value = 0,
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+    minimum_width = 300,
+    update_interval = 2.0,
+    use_xft = true,
+    font = 'Noto Sans:size=10',
+    color1 = 'EAEAEA',
+    color2 = 'FFA300',
+    color3 = 'grey',
+    color4 = 'green',
+    color5 = 'red',
+    color6 = 'purple',
+}
+
+conky.text = [[
+${color2}СИСТЕМА ${hr 2}
+${color4}ОС:${color1}${alignr}${exec cat /etc/os-release | grep '^PRETTY_NAME' | cut -d '=' -f 2 | sed 's/"//g'}
+${color4}Ядро:${color1}${alignr}$kernel
+${color4}Имя компьютера:${color1}${alignr}$nodename
+${color4}Время работы:${color1}${alignr}$uptime
+
+${color2}ДИСКИ ${hr 2}
+${color4}Система: $color${fs_free /} ${color #888888}${font :size=10} своб.$font${alignr}${color5}${diskio /dev/nvme0n1p2}$color
+${color #333333}${fs_bar 20,220 /} $color${offset -205}${voffset 8}${font :size=10}${fs_used /}$font$offset
+${color4}Архив: $color${fs_free /mnt/archive}${color #888888}${font :size=10} своб.$font${alignr}${color red}${diskio /dev/sda1}$color
+${color #333333}${fs_bar 20,220 /mnt/archive}$color${offset -205}${voffset 8}${font :size=10}${fs_used /mnt/archive}$font$offset
+${color4}Подкачка: $color${swapfree} ${color #888888}${font :size=10} своб.$font${alignr}${color red}${swapperc}%$color
+${color #333333}${swapbar 20,220}$color${offset -205}${voffset 8}${font :size=10}${swap}$font$offset
+
+${color2}ПРОЦЕССЫ ${hr 2}
+${color4}ЦПУ Нагрузка ${color5}${alignr}${cpu cpu0}%
+${color #333333}${cpubar cpu0 10,}${color1}
+${top name 1} $alignr ${top cpu 1}%
+${top name 2} $alignr ${top cpu 2}%
+${top name 3} $alignr ${top cpu 3}%
+${top name 4} $alignr ${top cpu 4}%
+${top name 5} $alignr ${top cpu 5}%
+${top name 6} $alignr ${top cpu 6}%
+${top name 7} $alignr ${top cpu 7}%
+${top name 8} $alignr ${top cpu 8}%
+
+${color4}ОЗУ Нагрузка ${color5}${alignr}${mem}
+${color #333333}${membar 10,}${color1}
+${top_mem name 1} $alignr ${top_mem mem_res 1}
+${top_mem name 2} $alignr ${top_mem mem_res 2}
+${top_mem name 3} $alignr ${top_mem mem_res 3}
+${top_mem name 4} $alignr ${top_mem mem_res 4}
+${top_mem name 5} $alignr ${top_mem mem_res 5}
+${top_mem name 6} $alignr ${top_mem mem_res 6}
+${top_mem name 7} $alignr ${top_mem mem_res 7}
+${top_mem name 8} $alignr ${top_mem mem_res 8}
+]]
