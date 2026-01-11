@@ -16,3 +16,14 @@
 ```bash
 # Для Ubuntu/Debian/KDE Neon:
 sudo apt install conky-all curl playerctl network-manager
+
+## 🔡 Шрифты (обязательно для иконок)
+Для корректного отображения символов и иконок необходимо установить:
+1. **Noto Sans** (основной текст)
+2. **MesloLGS NF** (иконки погоды и плеера) — [Скачать Meslo Nerd Font](https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf)
+
+**Установка в терминале:**
+```bash
+mkdir -p ~/.local/share/fonts
+cp *.ttf ~/.local/share/fonts/
+fc-cache -f -v
