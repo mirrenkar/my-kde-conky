@@ -34,11 +34,11 @@ conky.config = {
 
 conky.text = [[
 ${color2}NETWORK ${hr 2}
-${color4}WIFI SSID: ${color6}${exec iwgetid -r}
-${color4}Download speed${color5}${alignr}${downspeedf wlan0} KiB/s
-${color #333333}${downspeedgraph wlan0 40,}
-${color4}Upload speed${color5}${alignr}${upspeedf wlan0} KiB/s
-${color #333333}${upspeedgraph wlan0 40,}
-${color4}Local IP:${color1}${alignr}${addrs wlan0}
-${color4}Public IP:${color1}${alignr}${execi 3600 wget -q -O /dev/stdout http://checkip.dyndns.org/ | cut -d : -f 2- | cut -d \< -f -1}
+${color4}WIFI SSID: ${color6}${exec iwgetid -r || echo "Wired/None"}
+${color4}Download speed${color5}${alignr}${downspeedf ${gw_iface}} KiB/s
+${color #333333}${downspeedgraph ${gw_iface} 30,300 333333 FFA300}
+${color4}Upload speed${color5}${alignr}${upspeedf ${gw_iface}} KiB/s
+${color #333333}${upspeedgraph ${gw_iface} 30,300 333333 FB4834}
+${color4}Local IP: ${color1}${alignr}${addr ${gw_iface}}
+${color4}Public IP: ${color1}${alignr}${execi 3600 curl -s https://ipinfo.io/ip}
 ]]
