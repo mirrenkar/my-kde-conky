@@ -34,6 +34,6 @@ conky.config = {
 
 conky.text = [[
 ${color grey}Weather in Brooklyn, NY
-${execpi 3600 curl -s -H "Accept-Language: us" 'wttr.in/Brooklyn?0TQn&lang=us'}
+${execpi 3600 curl -s -H "Accept-Language: us" 'wttr.in/Brooklyn,NY?0TQnm&lang=us'}
 ${color grey}Last update: ${time %Y-%m-%d %H:%M}
 ]]

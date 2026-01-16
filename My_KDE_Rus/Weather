@@ -33,7 +33,7 @@ conky.config = {
 }
 
 conky.text = [[
-${color grey}Погода в Бруклине
-${execpi 3600 curl -s -H "Accept-Language: ru" 'wttr.in/Brooklyn?0TQn&lang=ru'}
+${color grey}Погода в Бруклине, Нью-Йорк
+${execpi 3600 curl -s -H "Accept-Language: ru" 'wttr.in/Brooklyn,NY?0TQn&lang=ru'}
 ${color grey}Обновлено: ${time %d.%m.%Y %H:%M}
 ]]
