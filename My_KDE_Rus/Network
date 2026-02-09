@@ -35,9 +35,9 @@ conky.config = {
 conky.text = [[
 ${color2}СЕТЬ ${hr 2}
 ${color4}WIFI SSID: ${color6}${exec iwgetid -r || echo "Wired/None"}
-${color4}Загрузка speed${color5}${alignr}${downspeedf ${gw_iface}} KiB/s
+${color4}Скорость загрузки${color5}${alignr}${downspeedf ${gw_iface}} KiB/s
 ${color #333333}${downspeedgraph ${gw_iface} 30,300 333333 FFA300}
-${color4}Отдача speed${color5}${alignr}${upspeedf ${gw_iface}} KiB/s
+${color4}Скорость передачи${color5}${alignr}${upspeedf ${gw_iface}} KiB/s
 ${color #333333}${upspeedgraph ${gw_iface} 30,300 333333 FB4834}
 ${color4}Локальный IP: ${color1}${alignr}${addr ${gw_iface}}
 ${color4}Публичный IP: ${color1}${alignr}${execi 3600 curl -s https://ipinfo.io/ip}
