@@ -4,7 +4,7 @@
 CONFIG_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # List of config files in this folder
-CONFIGS=("Gotham" "Process" "Network" "Weather")
+CONFIGS=("Gotham" "Process" "Network" "Weather" "Player")
 # Path to the wallpaper file (searches in the same folder)
 WALLPAPER="$CONFIG_DIR/wallpaper.png"
 
