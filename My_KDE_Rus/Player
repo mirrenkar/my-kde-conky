@@ -21,12 +21,15 @@ conky.config = {
 }
 
 conky.text = [[
-${color2}ПЛЕЕР ${hr 2}
-${alignc}${color1}${font Noto Sans:bold:size=14}${exec playerctl metadata xesam:title 2>/dev/null || echo "Музыка не играет"}
-${alignc}${color2}${font Noto Sans:size=12}${exec playerctl metadata xesam:artist 2>/dev/null || echo "Остановлено"}
+${color2}МУЗЫКАЛЬНЫЙ ПЛЕЕР ${hr 2}
+${voffset 5}${alignc}${color1}${font Noto Sans:bold:size=14}${exec playerctl metadata xesam:title 2>/dev/null || echo "Ничего не воспроизводится"}
+${alignc}${color2}${font Noto Sans:size=12}${exec playerctl metadata xesam:artist 2>/dev/null || echo "Нет данных"}
 
-${voffset 10}${alignc}${font Noto Sans:size=16}\
-${color1}  ⏮   ${color2}  ⏯   ${color1}  ⏭  ${font}
+${voffset 10}${alignc}${color1}${font Noto Sans:size=10}${exec playerctl metadata xesam:album 2>/dev/null || echo "---"}
 
-${voffset 10}${color #333333}${execbar echo "$(( 100 * $(playerctl position 2>/dev/null | cut -d. -f1 || echo 0) / $(playerctl metadata mpris:length 2>/dev/null | sed 's/......$//' || echo 1) ))" 2>/dev/null}
+# Прогресс-бар
+${voffset 10}${color2}${execbar sh -c 'pos=$(playerctl position 2>/dev/null | cut -d. -f1); dur=$(playerctl metadata mpris:length 2>/dev/null | sed "s/......$//"); [ -z "$pos" ] || [ -z "$dur" ] || [ "$dur" -le 0 ] && echo 0 || echo $((100 * $pos / $dur))'}
+
+# Время под баром (по центру)
+${voffset -5}${alignc}${color1}${font Noto Sans:size=9}${exec playerctl metadata --format "{{ duration(position) }} / {{ duration(mpris:length) }}" 2>/dev/null || echo "00:00 / 00:00"}${font}
 ]]

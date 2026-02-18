@@ -4,7 +4,7 @@
 CONFIG_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Список файлов конфигурации в этой папке
-CONFIGS=("Gotham" "Process" "Network" "Weather")
+CONFIGS=("Gotham" "Process" "Network" "Weather" "Player")
 # Путь к файлу обоев (ищется в той же папке)
 WALLPAPER="$CONFIG_DIR/wallpaper.png"
 
