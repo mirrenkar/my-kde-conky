@@ -34,6 +34,6 @@ conky.config = {
 
 conky.text = [[
 ${color grey}Weather in Brooklyn, NY
-${execpi 1800 (curl -s --max-time 5 'wttr.in/Brooklyn,NY?0TQnm&lang=us' || echo "Service Temporary Offline")}
+${execpi 1800 (curl -s --max-time 10 'wttr.in/Brooklyn,NY?0TQnm&lang=us' || echo "Service Temporary Offline")}
 ${color grey}Last update: ${time %H:%M}
 ]]
