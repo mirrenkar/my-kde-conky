@@ -1,17 +1,20 @@
 #!/bin/bash
 
-# Автоматическое определение пути к папке, в которой находится этот скрипт
+# Автоматически получаем путь к директории, где находится скрипт
 CONFIG_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# Список файлов конфигурации в этой папке
+# Список конфигурационных файлов в этой папке
 CONFIGS=("Gotham" "Process" "Network" "Weather" "Player")
 # Путь к файлу обоев (ищется в той же папке)
 WALLPAPER="$CONFIG_DIR/wallpaper.png"
 
+# Флаг для управления сменой обоев (по умолчанию отключен)
+CHANGE_WALLPAPER=false
+
 set_wallpaper() {
     if [ -f "$WALLPAPER" ]; then
-        echo "Установка обоев KDE..."
-        # Короткая пауза, чтобы Plasma успела инициализировать сессию D-Bus
+        echo "Setting KDE wallpaper..."
+        # Короткая пауза, чтобы D-Bus сессия Plasma успела инициализироваться
         sleep 2
         dbus-send --session --dest=org.kde.plasmashell --type=method_call /PlasmaShell org.kde.PlasmaShell.evaluateScript "string:
         var Desktops = desktops();
@@ -22,37 +25,52 @@ set_wallpaper() {
             d.writeConfig('Image', 'file://$WALLPAPER');
         }"
     else
-        echo "  [-] Обои не найдены: $WALLPAPER"
+        echo "  [-] Wallpaper not found: $WALLPAPER"
     fi
 }
 
 start_conky() {
-    # Если скрипт запускается при старте системы, ждем дольше для загрузки рабочего стола
+    # Если скрипт запущен при загрузке системы, ждем подольше для загрузки рабочего стола
     if [ "$1" == "boot" ]; then
-        echo "Ожидание загрузки рабочего стола..."
+        echo "Waiting for desktop environment to load..."
         sleep 10
     fi
 
-    set_wallpaper
+    # Меняем обои только если установлен флаг -change
+    if [ "$CHANGE_WALLPAPER" = true ]; then
+        set_wallpaper
+    else
+        echo "  [i] Wallpaper change skipped (use -change flag to enable)"
+    fi
 
-    echo "Запуск Conky..."
+    echo "Starting Conky..."
     for config in "${CONFIGS[@]}"; do
         FILE_PATH="$CONFIG_DIR/$config"
         if [ -f "$FILE_PATH" ]; then
             conky -c "$FILE_PATH" -d
-            echo "  [+] $config запущен"
+            echo "  [+] $config started"
         else
-            echo "  [-] ОШИБКА: $config не найден"
+            echo "  [-] ERROR: $config not found"
         fi
     done
 }
 
 stop_conky() {
-    echo "Остановка всех процессов Conky..."
+    echo "Stopping all Conky processes..."
     killall conky 2>/dev/null
     sleep 1
 }
 
+# Разбираем аргументы для проверки флага -change
+for arg in "$@"; do
+    case "$arg" in
+        -change)
+            CHANGE_WALLPAPER=true
+            ;;
+    esac
+done
+
+# Основная логика команд
 case "$1" in
     stop)
         stop_conky
@@ -62,12 +80,10 @@ case "$1" in
         start_conky
         ;;
     boot)
-        # Специальный режим для автозагрузки
         stop_conky
         start_conky "boot"
         ;;
     *)
-        # Действие по умолчанию: перезапуск
         stop_conky
         start_conky
         ;;

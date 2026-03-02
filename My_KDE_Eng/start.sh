@@ -8,6 +8,9 @@ CONFIGS=("Gotham" "Process" "Network" "Weather" "Player")
 # Path to the wallpaper file (searches in the same folder)
 WALLPAPER="$CONFIG_DIR/wallpaper.png"
 
+# Flag to control wallpaper change (disabled by default)
+CHANGE_WALLPAPER=false
+
 set_wallpaper() {
     if [ -f "$WALLPAPER" ]; then
         echo "Setting KDE wallpaper..."
@@ -33,7 +36,12 @@ start_conky() {
         sleep 10
     fi
 
-    set_wallpaper
+    # Change wallpaper only if the -change flag is set
+    if [ "$CHANGE_WALLPAPER" = true ]; then
+        set_wallpaper
+    else
+        echo "  [i] Wallpaper change skipped (use -change flag to enable)"
+    fi
 
     echo "Starting Conky..."
     for config in "${CONFIGS[@]}"; do
@@ -53,6 +61,16 @@ stop_conky() {
     sleep 1
 }
 
+# Parse arguments to check for the -change flag
+for arg in "$@"; do
+    case "$arg" in
+        -change)
+            CHANGE_WALLPAPER=true
+            ;;
+    esac
+done
+
+# Main command logic
 case "$1" in
     stop)
         stop_conky
